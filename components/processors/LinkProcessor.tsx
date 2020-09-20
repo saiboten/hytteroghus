@@ -17,21 +17,29 @@ export const AddLink = (props: AddProps) => {
   const [linkText, setLinkText] = useState("");
 
   return (
-    <>
-      <input
-        type="text"
-        value={link}
-        onChange={(e) => setLink(e.target.value)}
-      ></input>
-      <input
-        type="text"
-        value={linkText}
-        onChange={(e) => setLinkText(e.target.value)}
-      ></input>
+    <form>
+      <fieldset>
+        <label htmlFor="link">Lenke til</label>
+        <input
+          id="link"
+          type="text"
+          value={link}
+          onChange={(e) => setLink(e.target.value)}
+        ></input>
+      </fieldset>
+      <fieldset>
+        <label htmlFor="linkText">Lenketekst</label>
+        <input
+          id="linkText"
+          type="text"
+          value={linkText}
+          onChange={(e) => setLinkText(e.target.value)}
+        ></input>
+      </fieldset>
       <button onClick={() => props.addStuff("link", { link, linkText })}>
         Lagre
       </button>
-    </>
+    </form>
   );
 };
 

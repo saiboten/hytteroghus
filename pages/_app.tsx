@@ -2,39 +2,44 @@ import "../styles/globals.css";
 import styles from "../styles/_app.module.css";
 
 import { Provider, useAtom } from "jotai";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { userAtom } from "../components/atoms/user";
 import { firebase } from "../components/firebase/firebase";
-import { pageAtom } from "../components/atoms/page";
 
-function InsideProvider() {
+function InsideProvider({ children }: any) {
   const [, setUser] = useAtom(userAtom);
-  const [page] = useAtom(pageAtom);
+  const [userLoaded, setUserLoaded] = useState(false);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user: firebase.User | null) => {
       if (user == null) {
+        setUserLoaded(true);
         return;
       }
       const { uid } = user;
       setUser({
         uid,
-        editMode: false,
-        admin: page.admins.includes(uid),
+        loaded: true,
       });
+      setUserLoaded(true);
     });
   }, []);
 
-  return null;
+  if (userLoaded) {
+    return <>{children}</>;
+  }
+
+  return <div>Loading...</div>;
 }
 
 function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
   return (
     <Provider>
-      <InsideProvider />
-      <div className={styles.wrapper}>
-        <Component {...pageProps} />
-      </div>
+      <InsideProvider>
+        <div className={styles.wrapper}>
+          <Component {...pageProps} />
+        </div>
+      </InsideProvider>
     </Provider>
   );
 }

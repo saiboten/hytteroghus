@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { userAtom } from "../atoms/user";
 import { useAtom } from "jotai";
-import { FragmentType } from "../atoms/page";
+import { FragmentType, pageAtom } from "../atoms/page";
+
+import styles from "./TextProcessor.module.scss";
 
 interface Props {
   value: any;
@@ -16,12 +17,14 @@ export const AddText = (props: AddProps) => {
 
   return (
     <>
-      <input
-        type="text"
+      <textarea
+        className={styles.textarea}
         value={text}
         onChange={(e) => setText(e.target.value)}
-      ></input>
-      <button onClick={() => props.addStuff("text", text)}>Lagre</button>
+      ></textarea>
+      <button onClick={() => props.addStuff("text", { value: text })}>
+        Lagre
+      </button>
     </>
   );
 };
@@ -29,11 +32,12 @@ export const AddText = (props: AddProps) => {
 export const TextProcessor = (props: Props) => {
   const [edit, setEdit] = useState(false);
   const [value, setValue] = useState(props.value);
-  const [user] = useAtom(userAtom);
+  const [page] = useAtom(pageAtom);
 
   if (edit) {
     return (
-      <input
+      <textarea
+        className={styles.textarea}
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onBlur={() => {
@@ -47,7 +51,7 @@ export const TextProcessor = (props: Props) => {
   return (
     <p>
       {props.value}
-      {user.editMode && <button onClick={() => setEdit(true)}>Endre</button>}
+      {page.editMode && <button onClick={() => setEdit(true)}>Endre</button>}
     </p>
   );
 };

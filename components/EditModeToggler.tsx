@@ -1,26 +1,31 @@
 import React from "react";
 import { useAtom } from "jotai";
-import { userAtom } from "./atoms/user";
+import { pageAtom } from "./atoms/page";
 
 export function EditModeToggler() {
-  const [user, setUser] = useAtom(userAtom);
+  const [page, setPage] = useAtom(pageAtom);
 
   function edit() {
-    setUser({
-      ...user,
+    setPage({
+      ...page,
       editMode: true,
     });
   }
 
   function endEdit() {
-    setUser({
-      ...user,
+    setPage({
+      ...page,
       editMode: false,
     });
   }
+
+  if (!page.admin) {
+    return null;
+  }
+
   return (
     <>
-      {user.uid && !user.editMode ? (
+      {!page.editMode ? (
         <div>
           <button onClick={edit}>Endre innhold</button>Du er logget inn
         </div>

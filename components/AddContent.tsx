@@ -27,6 +27,7 @@ const WithShowAddContent = ({ index, resetAdd }: WithShowAddContent) => {
   const pageId = usePageId();
 
   function AddStuff(type: FragmentType, rest: any) {
+    console.log("Adding stuff", rest);
     const contentCopy = [...page.content];
 
     if (index == -1) {
@@ -42,6 +43,8 @@ const WithShowAddContent = ({ index, resetAdd }: WithShowAddContent) => {
         ...rest,
       });
     }
+
+    console.log("Content", contentCopy, site.collection, pageId);
 
     firebase.firestore().collection(site.collection).doc(pageId).update({
       content: contentCopy,
@@ -83,10 +86,10 @@ interface AddContentProps {
 }
 
 export const AddContent = ({ index }: AddContentProps) => {
-  const [user] = useAtom(userAtom);
+  const [page] = useAtom(pageAtom);
   const [showAddContent, setShowAddContent] = useState(false);
 
-  if (!user.editMode) {
+  if (!page.editMode) {
     return null;
   }
 

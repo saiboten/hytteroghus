@@ -6,9 +6,23 @@ import { ImageProcessor } from "./processors/ImageProcessor";
 import { AddContent } from "./AddContent";
 import { DeleteContent } from "./DeleteContent";
 import { LinkProcessor } from "./processors/LinkProcessor";
+import { usePageId } from "./hooks/usePageId";
+import { CreatePage } from "./CreatePage";
+import { userAtom } from "./atoms/user";
 
 export const PageProcessor = () => {
   const [page] = useAtom(pageAtom);
+  const [pageId] = usePageId();
+
+  if (page.content === undefined) {
+    return (
+      <div>
+        <h1>Side ikke funnet</h1>
+        <p>Hei, du har kommet til en side som ikke finnes</p>
+        {page.admin && <CreatePage pageToBeCreated={pageId} />}
+      </div>
+    );
+  }
 
   return (
     <>

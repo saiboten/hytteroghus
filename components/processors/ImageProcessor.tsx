@@ -19,7 +19,9 @@ export const AddImage = (props: AddProps) => {
         value={image}
         onChange={(e) => setImage(e.target.value)}
       ></input>
-      <button onClick={() => props.addStuff("image", image)}>Lagre</button>
+      <button onClick={() => props.addStuff("image", { value: image })}>
+        Lagre
+      </button>
     </>
   );
 };

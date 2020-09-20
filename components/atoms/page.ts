@@ -14,10 +14,14 @@ export interface PageAtomType {
   title: string;
   content: Content[];
   admins: string[];
+  admin: boolean;
+  editMode: boolean;
 }
 
 export const pageAtom = atom<PageAtomType>({
-  admins: ["uid1", "uid2"],
+  admins: [],
+  admin: false,
   title: "",
   content: [],
+  editMode: false,
 });

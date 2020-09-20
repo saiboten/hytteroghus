@@ -13,10 +13,9 @@ interface Props {
 export const DeleteContent = ({ index }: Props) => {
   const [page] = useAtom(pageAtom);
   const [site] = useAtom(siteAtom);
-  const [user] = useAtom(userAtom);
   const pageId = usePageId();
 
-  if (!user.editMode) {
+  if (!page.editMode) {
     return null;
   }
 

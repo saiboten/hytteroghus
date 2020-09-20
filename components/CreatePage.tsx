@@ -6,7 +6,11 @@ import { PageAtomType } from "./atoms/page";
 import { siteAtom } from "./atoms/site";
 import { useState } from "react";
 
-const CreatePageInfo = () => {
+interface Props {
+  pageToBeCreated: string;
+}
+
+const CreatePageInfo = ({ pageToBeCreated }: Props) => {
   const [site] = useAtom(siteAtom);
   const [user] = useAtom(userAtom);
 
@@ -23,11 +27,13 @@ const CreatePageInfo = () => {
     firebase
       .firestore()
       .collection(site.collection)
-      .doc("home")
+      .doc(pageToBeCreated)
       .set({
         admins: [user.uid],
         title: site.collection,
         content: [],
+        admin: true,
+        editMode: false,
       } as PageAtomType);
   }
 
@@ -39,11 +45,11 @@ const CreatePageInfo = () => {
   );
 };
 
-export function CreatePage() {
+export function CreatePage(props: Props) {
   const [creating, setCreating] = useState(false);
 
   if (creating) {
-    return <CreatePageInfo />;
+    return <CreatePageInfo {...props} />;
   }
 
   return (

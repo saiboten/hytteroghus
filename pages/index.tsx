@@ -15,7 +15,7 @@ export default function Home() {
   useFirebaseData("home");
 
   if (!page.admins) {
-    return <CreatePage />;
+    return <CreatePage pageToBeCreated="home" />;
   }
 
   return (
