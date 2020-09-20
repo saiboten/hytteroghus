@@ -19,7 +19,6 @@ function InsideProvider({ children }: any) {
       const { uid } = user;
       setUser({
         uid,
-        loaded: true,
       });
       setUserLoaded(true);
     });
