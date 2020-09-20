@@ -1,6 +1,9 @@
 import React from "react";
 import { useAtom } from "jotai";
 import { pageAtom } from "./atoms/page";
+import Button from "@material-ui/core/Button";
+
+import styles from "./EditModeToggler.module.scss";
 
 export function EditModeToggler() {
   const [page, setPage] = useAtom(pageAtom);
@@ -24,14 +27,16 @@ export function EditModeToggler() {
   }
 
   return (
-    <>
+    <div className={styles.container}>
       {!page.editMode ? (
-        <div>
-          <button onClick={edit}>Endre innhold</button>Du er logget inn
-        </div>
+        <Button variant="contained" color="primary" onClick={edit}>
+          Endre innhold
+        </Button>
       ) : (
-        <button onClick={endEdit}>Avslutt innholdsredigering</button>
+        <Button variant="contained" color="primary" onClick={endEdit}>
+          Avslutt innholdsredigering
+        </Button>
       )}
-    </>
+    </div>
   );
 }

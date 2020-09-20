@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
     "firebase": "^7.20.0",
     "jotai": "^0.4.1",
     "next": "9.5.1",

@@ -53,12 +53,19 @@ export const InternalLogin = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="button" onClick={togglePeek}>
+        <Button
+          variant="contained"
+          color="primary"
+          type="button"
+          onClick={togglePeek}
+        >
           {peek ? "eye-off" : "eye"}
-        </button>
+        </Button>
       </div>
 
-      <button type="submit">Logg inn</button>
+      <Button variant="contained" color="primary" type="submit">
+        Logg inn
+      </Button>
       <p>{errorMessage}</p>
     </form>
   );

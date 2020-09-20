@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { FragmentType } from "../atoms/page";
 import styles from "./Link.module.scss";
+import Button from "@material-ui/core/Button";
 
 interface Props {
   link: string;
   linkText: string;
+  index: number;
 }
 
 interface AddProps {
@@ -36,9 +38,13 @@ export const AddLink = (props: AddProps) => {
           onChange={(e) => setLinkText(e.target.value)}
         ></input>
       </fieldset>
-      <button onClick={() => props.addStuff("link", { link, linkText })}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => props.addStuff("link", { link, linkText })}
+      >
         Lagre
-      </button>
+      </Button>
     </form>
   );
 };

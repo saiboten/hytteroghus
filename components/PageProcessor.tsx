@@ -4,11 +4,9 @@ import { useAtom } from "jotai";
 import { TextProcessor } from "./processors/TextProcessor";
 import { ImageProcessor } from "./processors/ImageProcessor";
 import { AddContent } from "./AddContent";
-import { DeleteContent } from "./DeleteContent";
 import { LinkProcessor } from "./processors/LinkProcessor";
 import { usePageId } from "./hooks/usePageId";
 import { CreatePage } from "./CreatePage";
-import { userAtom } from "./atoms/user";
 
 export const PageProcessor = () => {
   const [page] = useAtom(pageAtom);
@@ -31,11 +29,11 @@ export const PageProcessor = () => {
         var elem = undefined;
 
         if (item.type === "text") {
-          elem = <TextProcessor {...item} />;
+          elem = <TextProcessor index={index} {...item} />;
         } else if (item.type == "image") {
-          elem = <ImageProcessor {...item} />;
+          elem = <ImageProcessor index={index} {...item} />;
         } else if (item.type == "link") {
-          elem = <LinkProcessor {...item} />;
+          elem = <LinkProcessor index={index} {...item} />;
         } else {
           throw new Error("Unsupported content type detected");
         }
@@ -43,7 +41,6 @@ export const PageProcessor = () => {
         return (
           <React.Fragment key={index}>
             {elem}
-            <DeleteContent index={index} />
             <AddContent index={index} />
           </React.Fragment>
         );

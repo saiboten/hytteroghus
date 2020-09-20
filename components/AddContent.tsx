@@ -3,15 +3,14 @@ import { pageAtom, FragmentType } from "./atoms/page";
 import { siteAtom } from "./atoms/site";
 
 import { useAtom } from "jotai";
-import { userAtom } from "./atoms/user";
 import { create_UUID } from "./util/uuid";
 import { firebase } from "./firebase/firebase";
 import { usePageId } from "./hooks/usePageId";
 import { AddText } from "./processors/TextProcessor";
 import { AddLink } from "./processors/LinkProcessor";
 import { AddImage } from "./processors/ImageProcessor";
-
-import styles from "./AddContent.module.css";
+import Button from "@material-ui/core/Button";
+import styles from "./AddContent.module.scss";
 
 interface WithShowAddContent {
   index: number;
@@ -65,18 +64,31 @@ const WithShowAddContent = ({ index, resetAdd }: WithShowAddContent) => {
   }
 
   return (
-    <div>
-      <ul>
-        <li>
-          <button onClick={() => setAddText(true)}>Legg til tekst</button>
-        </li>
-        <li>
-          <button onClick={() => setAddImage(true)}>Legg til bilde</button>
-        </li>
-        <li>
-          <button onClick={() => setAddLink(true)}>Legg til lenke</button>
-        </li>
-      </ul>
+    <div className={styles.addcontentbuttongroup}>
+      <Button
+        className={styles.addcontentbutton}
+        variant="contained"
+        color="primary"
+        onClick={() => setAddText(true)}
+      >
+        Legg til tekst
+      </Button>
+      <Button
+        className={styles.addcontentbutton}
+        variant="contained"
+        color="primary"
+        onClick={() => setAddImage(true)}
+      >
+        Legg til bilde
+      </Button>
+      <Button
+        className={styles.addcontentbutton}
+        variant="contained"
+        color="primary"
+        onClick={() => setAddLink(true)}
+      >
+        Legg til lenke
+      </Button>
     </div>
   );
 };

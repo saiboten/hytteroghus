@@ -2,3 +2,13 @@
   width: 100%;
   height: 100px;
 }
+
+.optionsbuttons {
+  margin-bottom: 12px;
+}
+
+.optionsbutton {
+  &:not(:last-child) {
+    margin-right: 12px;
+  }
+}

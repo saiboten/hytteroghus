@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { FragmentType } from "../atoms/page";
+import Button from "@material-ui/core/Button";
 
 interface Props {
   value: string;
+  index: number;
 }
 
 interface AddProps {
@@ -19,9 +21,13 @@ export const AddImage = (props: AddProps) => {
         value={image}
         onChange={(e) => setImage(e.target.value)}
       ></input>
-      <button onClick={() => props.addStuff("image", { value: image })}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => props.addStuff("image", { value: image })}
+      >
         Lagre
-      </button>
+      </Button>
     </>
   );
 };

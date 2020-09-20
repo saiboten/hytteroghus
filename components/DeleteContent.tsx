@@ -3,8 +3,8 @@ import { firebase } from "./firebase/firebase";
 import { useAtom } from "jotai";
 import { pageAtom } from "./atoms/page";
 import { usePageId } from "./hooks/usePageId";
-import { userAtom } from "./atoms/user";
 import { siteAtom } from "./atoms/site";
+import Button from "@material-ui/core/Button";
 
 interface Props {
   index: number;
@@ -28,5 +28,9 @@ export const DeleteContent = ({ index }: Props) => {
     });
   }
 
-  return <button onClick={deleteContent}>Slett innhold</button>;
+  return (
+    <Button variant="contained" color="primary" onClick={deleteContent}>
+      Slett innhold
+    </Button>
+  );
 };

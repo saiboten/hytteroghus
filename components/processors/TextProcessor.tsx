@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useAtom } from "jotai";
 import { FragmentType, pageAtom } from "../atoms/page";
+import Button from "@material-ui/core/Button";
 
 import styles from "./TextProcessor.module.scss";
+import { DeleteContent } from "../DeleteContent";
 
 interface Props {
   value: any;
+  index: number;
 }
 
 interface AddProps {
@@ -22,24 +25,28 @@ export const AddText = (props: AddProps) => {
         value={text}
         onChange={(e) => setText(e.target.value)}
       ></textarea>
-      <button onClick={() => props.addStuff("text", { value: text })}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => props.addStuff("text", { value: text })}
+      >
         Lagre
-      </button>
+      </Button>
     </>
   );
 };
 
-export const TextProcessor = (props: Props) => {
+export const TextProcessor = ({ value, index }: Props) => {
   const [edit, setEdit] = useState(false);
-  const [value, setValue] = useState(props.value);
+  const [newValue, setNewValue] = useState(value);
   const [page] = useAtom(pageAtom);
 
   if (edit) {
     return (
       <textarea
         className={styles.textarea}
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={newValue}
+        onChange={(e) => setNewValue(e.target.value)}
         onBlur={() => {
           alert("Lagret");
           setEdit(false);
@@ -49,9 +56,21 @@ export const TextProcessor = (props: Props) => {
   }
 
   return (
-    <p>
-      {props.value}
-      {page.editMode && <button onClick={() => setEdit(true)}>Endre</button>}
-    </p>
+    <div>
+      {value}
+      <div className={styles.optionsbuttons}>
+        {page.editMode && (
+          <Button
+            className={styles.optionsbutton}
+            variant="contained"
+            color="primary"
+            onClick={() => setEdit(true)}
+          >
+            Endre
+          </Button>
+        )}
+        <DeleteContent index={index} />
+      </div>
+    </div>
   );
 };

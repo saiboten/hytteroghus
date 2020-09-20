@@ -5,6 +5,7 @@ import { Login } from "./login/Login";
 import { PageAtomType } from "./atoms/page";
 import { siteAtom } from "./atoms/site";
 import { useState } from "react";
+import Button from "@material-ui/core/Button";
 
 interface Props {
   pageToBeCreated: string;
@@ -40,7 +41,9 @@ const CreatePageInfo = ({ pageToBeCreated }: Props) => {
   return (
     <div>
       <h1>Opprett side</h1>
-      <button onClick={create}>Opprett side</button>
+      <Button variant="contained" color="primary" onClick={create}>
+        Opprett side
+      </Button>
     </div>
   );
 };
@@ -58,7 +61,13 @@ export function CreatePage(props: Props) {
       <p>
         Denne siden finnes ikke enda. Har du lyst å opprette en ny side her?
       </p>
-      <button onClick={() => setCreating(true)}>Opprett side</button>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => setCreating(true)}
+      >
+        Opprett side
+      </Button>
     </div>
   );
 }
