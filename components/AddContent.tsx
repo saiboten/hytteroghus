@@ -25,8 +25,7 @@ const WithShowAddContent = ({ index, resetAdd }: WithShowAddContent) => {
   const [addImage, setAddImage] = useState(false);
   const pageId = usePageId();
 
-  function AddStuff(type: FragmentType, rest: any) {
-    console.log("Adding stuff", rest);
+  function StoreContent(type: FragmentType, rest: any) {
     const contentCopy = [...page.content];
 
     if (index == -1) {
@@ -43,8 +42,6 @@ const WithShowAddContent = ({ index, resetAdd }: WithShowAddContent) => {
       });
     }
 
-    console.log("Content", contentCopy, site.collection, pageId);
-
     firebase.firestore().collection(site.collection).doc(pageId).update({
       content: contentCopy,
     });
@@ -52,15 +49,15 @@ const WithShowAddContent = ({ index, resetAdd }: WithShowAddContent) => {
   }
 
   if (addText) {
-    return <AddText addStuff={AddStuff} />;
+    return <AddText storeContent={StoreContent} />;
   }
 
   if (addLink) {
-    return <AddLink addStuff={AddStuff} />;
+    return <AddLink addStuff={StoreContent} />;
   }
 
   if (addImage) {
-    return <AddImage addStuff={AddStuff} />;
+    return <AddImage addStuff={StoreContent} />;
   }
 
   return (

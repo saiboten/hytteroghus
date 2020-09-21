@@ -7,10 +7,13 @@ import { AddContent } from "./AddContent";
 import { LinkProcessor } from "./processors/LinkProcessor";
 import { usePageId } from "./hooks/usePageId";
 import { CreatePage } from "./CreatePage";
+import { firebase } from "./firebase/firebase";
+import { siteAtom } from "./atoms/site";
 
 export const PageProcessor = () => {
   const [page] = useAtom(pageAtom);
-  const [pageId] = usePageId();
+  const [site] = useAtom(siteAtom);
+  const pageId = usePageId();
 
   if (page.content === undefined) {
     return (
@@ -22,6 +25,18 @@ export const PageProcessor = () => {
     );
   }
 
+  function saveChange(index: number, newValues: any) {
+    const contentCopy = [...page.content];
+    contentCopy[index] = {
+      ...contentCopy[index],
+      ...newValues,
+    };
+
+    firebase.firestore().collection(site.collection).doc(pageId).update({
+      content: contentCopy,
+    });
+  }
+
   return (
     <>
       <AddContent index={-1} />
@@ -29,11 +44,17 @@ export const PageProcessor = () => {
         var elem = undefined;
 
         if (item.type === "text") {
-          elem = <TextProcessor index={index} {...item} />;
+          elem = (
+            <TextProcessor saveChange={saveChange} index={index} {...item} />
+          );
         } else if (item.type == "image") {
-          elem = <ImageProcessor index={index} {...item} />;
+          elem = (
+            <ImageProcessor saveChange={saveChange} index={index} {...item} />
+          );
         } else if (item.type == "link") {
-          elem = <LinkProcessor index={index} {...item} />;
+          elem = (
+            <LinkProcessor saveChange={saveChange} index={index} {...item} />
+          );
         } else {
           throw new Error("Unsupported content type detected");
         }

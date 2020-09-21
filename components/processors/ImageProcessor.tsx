@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 interface Props {
   value: string;
   index: number;
+  saveChange: (index: number, values: any) => void;
 }
 
 interface AddProps {

@@ -9,10 +9,11 @@ import { DeleteContent } from "../DeleteContent";
 interface Props {
   value: any;
   index: number;
+  saveChange: (index: number, values: any) => void;
 }
 
 interface AddProps {
-  addStuff: (type: FragmentType, ...data: any[]) => void;
+  storeContent: (type: FragmentType, ...data: any[]) => void;
 }
 
 export const AddText = (props: AddProps) => {
@@ -28,7 +29,7 @@ export const AddText = (props: AddProps) => {
       <Button
         variant="contained"
         color="primary"
-        onClick={() => props.addStuff("text", { value: text })}
+        onClick={() => props.storeContent("text", { value: text })}
       >
         Lagre
       </Button>
@@ -36,10 +37,15 @@ export const AddText = (props: AddProps) => {
   );
 };
 
-export const TextProcessor = ({ value, index }: Props) => {
+export const TextProcessor = ({ value, index, saveChange }: Props) => {
   const [edit, setEdit] = useState(false);
   const [newValue, setNewValue] = useState(value);
   const [page] = useAtom(pageAtom);
+
+  function storeChange() {
+    setEdit(false);
+    saveChange(index, { value: newValue });
+  }
 
   if (edit) {
     return (
@@ -47,10 +53,7 @@ export const TextProcessor = ({ value, index }: Props) => {
         className={styles.textarea}
         value={newValue}
         onChange={(e) => setNewValue(e.target.value)}
-        onBlur={() => {
-          alert("Lagret");
-          setEdit(false);
-        }}
+        onBlur={storeChange}
       />
     );
   }
