@@ -4,9 +4,11 @@ import { pageAtom } from "./atoms/page";
 import Button from "@material-ui/core/Button";
 
 import styles from "./EditModeToggler.module.scss";
+import { useIsAdmin } from "./hooks/useIsAdmin";
 
 export function EditModeToggler() {
   const [page, setPage] = useAtom(pageAtom);
+  const isAdmin = useIsAdmin();
 
   function edit() {
     setPage({
@@ -22,7 +24,7 @@ export function EditModeToggler() {
     });
   }
 
-  if (!page.admin) {
+  if (!isAdmin) {
     return null;
   }
 

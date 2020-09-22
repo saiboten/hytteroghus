@@ -1,40 +1,29 @@
-import Head from "next/head";
-import Link from "next/link";
-
-import { useRouter } from "next/router";
 import { useAtom } from "jotai";
-import { pageAtom } from "../../components/atoms/page";
-import { PageProcessor } from "../../components/PageProcessor";
-import { useFirebaseData } from "../../components/firebase/useFirebaseData";
-import { EditModeToggler } from "../../components/EditModeToggler";
+import { useEffect } from "react";
+import { siteAtom } from "../../components/atoms/site";
+import { HomeWithSiteLoaded } from "../../components/HomePageSiteLoaded";
 
-export default function Home() {
-  const router = useRouter();
-
-  const [page] = useAtom(pageAtom);
-  const { pageId } = router.query;
-
-  useFirebaseData(pageId as string);
-
-  return (
-    <div>
-      <Head>
-        <title>Hytta</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        <Link href="/">
-          <a>Hjem</a>
-        </Link>
-
-        <h1>{page.title}</h1>
-        <PageProcessor />
-      </main>
-
-      <EditModeToggler />
-
-      <footer>Footer here</footer>
-    </div>
-  );
+interface Props {
+  siteProp: string;
 }
+
+export default function Home({ siteProp }: Props) {
+  const [site, setSite] = useAtom(siteAtom);
+
+  useEffect(() => {
+    setSite({
+      ...site,
+      collection: siteProp,
+    });
+  }, [siteProp]);
+
+  if (site.collection === "") {
+    return <div>Laster</div>;
+  }
+
+  return <HomeWithSiteLoaded />;
+}
+
+Home.getInitialProps = async (ctx: any) => {
+  return { siteProp: "lyngdotten" };
+};

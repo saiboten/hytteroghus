@@ -5,7 +5,6 @@ import { Provider, useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { userAtom } from "../components/atoms/user";
 import { firebase } from "../components/firebase/firebase";
-import { siteAtom } from "../components/atoms/site";
 
 function AuthChangeLoader({ children }: any) {
   const [, setUser] = useAtom(userAtom);
