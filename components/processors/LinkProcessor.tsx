@@ -52,11 +52,39 @@ export const AddLink = (props: AddProps) => {
   );
 };
 
-export const LinkProcessor = ({ link, linkText, index }: Props) => {
+export const LinkProcessor = ({ link, linkText, index, saveChange }: Props) => {
   const [edit, setEdit] = useState(false);
   const [newLinkValue, setNewLinkValue] = useState(link);
   const [newLinkTextValue, setNewLinkTextValue] = useState(linkText);
   const [page] = useAtom(pageAtom);
+
+  if (edit) {
+    return (
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          saveChange(index, { link: newLinkValue, linkText: newLinkTextValue });
+          setEdit(false);
+        }}
+      >
+        <fieldset>
+          <label htmlFor="newLink">Ny lenke: </label>
+          <input
+            id="newLink"
+            value={newLinkValue}
+            onChange={(e) => setNewLinkValue(e.target.value)}
+          />
+          <label htmlFor="newLinkText">Ny lenketekst: </label>
+          <input
+            id="newLinkText"
+            value={newLinkTextValue}
+            onChange={(e) => setNewLinkTextValue(e.target.value)}
+          />
+        </fieldset>
+        <button type="submit">Lagre</button>
+      </form>
+    );
+  }
 
   return (
     <>

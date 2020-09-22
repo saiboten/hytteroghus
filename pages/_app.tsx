@@ -5,8 +5,9 @@ import { Provider, useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { userAtom } from "../components/atoms/user";
 import { firebase } from "../components/firebase/firebase";
+import { siteAtom } from "../components/atoms/site";
 
-function InsideProvider({ children }: any) {
+function AuthChangeLoader({ children }: any) {
   const [, setUser] = useAtom(userAtom);
   const [userLoaded, setUserLoaded] = useState(false);
 
@@ -28,17 +29,17 @@ function InsideProvider({ children }: any) {
     return <>{children}</>;
   }
 
-  return <div>Loading...</div>;
+  return <div>Laster bruker...</div>;
 }
 
 function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
   return (
     <Provider>
-      <InsideProvider>
+      <AuthChangeLoader>
         <div className={styles.wrapper}>
           <Component {...pageProps} />
         </div>
-      </InsideProvider>
+      </AuthChangeLoader>
     </Provider>
   );
 }

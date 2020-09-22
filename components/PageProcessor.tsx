@@ -9,18 +9,20 @@ import { usePageId } from "./hooks/usePageId";
 import { CreatePage } from "./CreatePage";
 import { firebase } from "./firebase/firebase";
 import { siteAtom } from "./atoms/site";
+import { useIsAdmin } from "./hooks/useIsAdmin";
 
 export const PageProcessor = () => {
   const [page] = useAtom(pageAtom);
   const [site] = useAtom(siteAtom);
   const pageId = usePageId();
+  const isAdmin = useIsAdmin();
 
   if (page.content === undefined) {
     return (
       <div>
         <h1>Side ikke funnet</h1>
         <p>Hei, du har kommet til en side som ikke finnes</p>
-        {page.admin && <CreatePage pageToBeCreated={pageId} />}
+        {isAdmin && <CreatePage pageToBeCreated={pageId} />}
       </div>
     );
   }
