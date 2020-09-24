@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 
 import styles from "./TextProcessor.module.scss";
 import { DeleteContent } from "../DeleteContent";
+import { styled } from "@material-ui/core";
 
 interface Props {
   value: any;
@@ -59,7 +60,7 @@ export const TextProcessor = ({ value, index, saveChange }: Props) => {
   }
 
   return (
-    <div>
+    <div className={styles.text}>
       {value}
       <div className={styles.optionsbuttons}>
         {page.editMode && (

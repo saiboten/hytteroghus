@@ -10,6 +10,7 @@ import { CreatePage } from "./CreatePage";
 import { firebase } from "./firebase/firebase";
 import { siteAtom } from "./atoms/site";
 import { useIsAdmin } from "./hooks/useIsAdmin";
+import styles from "./PageProcessor.module.scss";
 
 export const PageProcessor = () => {
   const [page] = useAtom(pageAtom);
@@ -63,7 +64,7 @@ export const PageProcessor = () => {
 
         return (
           <React.Fragment key={index}>
-            {elem}
+            <div className={page.editMode ? styles.wrapper : ""}>{elem}</div>
             <AddContent index={index} />
           </React.Fragment>
         );

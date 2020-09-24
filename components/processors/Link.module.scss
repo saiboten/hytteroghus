@@ -2,3 +2,16 @@ a.link:link,
 a.link:visited {
   border-bottom: 1px solid black;
 }
+
+.optionsbuttons {
+  margin-bottom: 12px;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.optionsbutton {
+  &:not(:last-child) {
+    margin-right: 12px;
+  }
+}

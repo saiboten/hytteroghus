@@ -5,6 +5,7 @@ import styles from "./Link.module.scss";
 import Button from "@material-ui/core/Button";
 import { useAtom } from "jotai";
 import { DeleteContent } from "../DeleteContent";
+import { styled } from "@material-ui/core";
 
 interface Props {
   link: string;
@@ -91,17 +92,19 @@ export const LinkProcessor = ({ link, linkText, index, saveChange }: Props) => {
       <Link href={link}>
         <a className={styles.link}>{linkText}</a>
       </Link>
-      {page.editMode && (
-        <Button
-          className={styles.optionsbutton}
-          variant="contained"
-          color="primary"
-          onClick={() => setEdit(true)}
-        >
-          Endre
-        </Button>
-      )}
-      <DeleteContent index={index} />
+      <div className={styles.optionsbuttons}>
+        {page.editMode && (
+          <Button
+            className={styles.optionsbutton}
+            variant="contained"
+            color="primary"
+            onClick={() => setEdit(true)}
+          >
+            Endre
+          </Button>
+        )}
+        <DeleteContent index={index} />
+      </div>
     </>
   );
 };

@@ -5,10 +5,17 @@
 
 .optionsbuttons {
   margin-bottom: 12px;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .optionsbutton {
   &:not(:last-child) {
     margin-right: 12px;
   }
+}
+
+.text {
+  margin-bottom: 24px;
 }
