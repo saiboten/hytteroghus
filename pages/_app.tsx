@@ -5,6 +5,15 @@ import { Provider, useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import { userAtom } from "../components/atoms/user";
 import { firebase } from "../components/firebase/firebase";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+
+const theme = createMuiTheme({
+  typography: {
+    // In Chinese and Japanese the characters are usually larger,
+    // so a smaller fontsize may be appropriate.
+    fontSize: 20,
+  },
+});
 
 function AuthChangeLoader({ children }: any) {
   const [, setUser] = useAtom(userAtom);
@@ -34,11 +43,13 @@ function AuthChangeLoader({ children }: any) {
 function MyApp({ Component, pageProps }: { Component: any; pageProps: any }) {
   return (
     <Provider>
-      <AuthChangeLoader>
-        <div className={styles.wrapper}>
-          <Component {...pageProps} />
-        </div>
-      </AuthChangeLoader>
+      <ThemeProvider theme={theme}>
+        <AuthChangeLoader>
+          <div className={styles.wrapper}>
+            <Component {...pageProps} />
+          </div>
+        </AuthChangeLoader>
+      </ThemeProvider>
     </Provider>
   );
 }

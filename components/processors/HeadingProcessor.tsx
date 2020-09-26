@@ -3,7 +3,7 @@ import { useAtom } from "jotai";
 import { FragmentType, pageAtom } from "../atoms/page";
 import Button from "@material-ui/core/Button";
 
-import styles from "./TextProcessor.module.scss";
+import styles from "./HeadingProcessor.module.scss";
 import { DeleteContent } from "../DeleteContent";
 
 interface Props {
@@ -16,7 +16,7 @@ interface AddProps {
   storeContent: (type: FragmentType, ...data: any[]) => void;
 }
 
-export const AddText = (props: AddProps) => {
+export const AddHeading = (props: AddProps) => {
   const [text, setText] = useState("");
 
   return (
@@ -29,7 +29,7 @@ export const AddText = (props: AddProps) => {
       <Button
         variant="contained"
         color="primary"
-        onClick={() => props.storeContent("text", { value: text })}
+        onClick={() => props.storeContent("heading", { value: text })}
       >
         Lagre
       </Button>
@@ -37,7 +37,7 @@ export const AddText = (props: AddProps) => {
   );
 };
 
-export const TextProcessor = ({ value, index, saveChange }: Props) => {
+export const HeadingProcessor = ({ value, index, saveChange }: Props) => {
   const [edit, setEdit] = useState(false);
   const [newValue, setNewValue] = useState(value);
   const [page] = useAtom(pageAtom);
@@ -60,7 +60,7 @@ export const TextProcessor = ({ value, index, saveChange }: Props) => {
 
   return (
     <div className={styles.text}>
-      {value}
+      <h1>{value}</h1>
       <div className={styles.optionsbuttons}>
         {page.editMode && (
           <Button

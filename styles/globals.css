@@ -38,3 +38,18 @@ a:visited {
   background-color: white;
   color: black;
 }
+
+.mr {
+  margin-right: 10px;
+}
+
+.inputgroup {
+  margin-bottom: 1rem;
+}
+
+.actiongroup {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px;
+}

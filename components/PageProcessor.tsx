@@ -11,6 +11,7 @@ import { firebase } from "./firebase/firebase";
 import { siteAtom } from "./atoms/site";
 import { useIsAdmin } from "./hooks/useIsAdmin";
 import styles from "./PageProcessor.module.scss";
+import { HeadingProcessor } from "./processors/HeadingProcessor";
 
 export const PageProcessor = () => {
   const [page] = useAtom(pageAtom);
@@ -57,6 +58,10 @@ export const PageProcessor = () => {
         } else if (item.type == "link") {
           elem = (
             <LinkProcessor saveChange={saveChange} index={index} {...item} />
+          );
+        } else if (item.type == "heading") {
+          elem = (
+            <HeadingProcessor saveChange={saveChange} index={index} {...item} />
           );
         } else {
           throw new Error("Unsupported content type detected");

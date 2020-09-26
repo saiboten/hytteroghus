@@ -11,6 +11,7 @@ import { AddLink } from "./processors/LinkProcessor";
 import { AddImage } from "./processors/ImageProcessor";
 import Button from "@material-ui/core/Button";
 import styles from "./AddContent.module.scss";
+import { AddHeading } from "./processors/HeadingProcessor";
 
 interface WithShowAddContent {
   index: number;
@@ -23,6 +24,7 @@ const WithShowAddContent = ({ index, resetAdd }: WithShowAddContent) => {
   const [addText, setAddText] = useState(false);
   const [addLink, setAddLink] = useState(false);
   const [addImage, setAddImage] = useState(false);
+  const [addHeader, setAddHeader] = useState(false);
   const pageId = usePageId();
 
   function StoreContent(type: FragmentType, rest: any) {
@@ -60,6 +62,10 @@ const WithShowAddContent = ({ index, resetAdd }: WithShowAddContent) => {
     return <AddImage addStuff={StoreContent} />;
   }
 
+  if (addHeader) {
+    return <AddHeading storeContent={StoreContent} />;
+  }
+
   return (
     <div className={styles.addcontentbuttongroup}>
       <Button
@@ -69,6 +75,14 @@ const WithShowAddContent = ({ index, resetAdd }: WithShowAddContent) => {
         onClick={() => setAddText(true)}
       >
         Legg til tekst
+      </Button>
+      <Button
+        className={styles.addcontentbutton}
+        variant="contained"
+        color="primary"
+        onClick={() => setAddHeader(true)}
+      >
+        Legg til overskrift
       </Button>
       <Button
         className={styles.addcontentbutton}

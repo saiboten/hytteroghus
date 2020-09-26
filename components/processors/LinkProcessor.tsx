@@ -5,7 +5,6 @@ import styles from "./Link.module.scss";
 import Button from "@material-ui/core/Button";
 import { useAtom } from "jotai";
 import { DeleteContent } from "../DeleteContent";
-import { styled } from "@material-ui/core";
 
 interface Props {
   link: string;

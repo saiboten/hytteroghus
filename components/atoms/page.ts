@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 
-export type FragmentType = "image" | "text" | "link";
+export type FragmentType = "image" | "text" | "link" | "heading";
 
 interface Content {
   id: string;

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { firebase } from "../firebase/firebase";
+import { Button, TextField } from "@material-ui/core";
+import Link from "next/link";
 
 export const InternalLogin = () => {
   const [user, setUser] = useState("");
@@ -21,7 +23,10 @@ export const InternalLogin = () => {
         const errorMessage = error.message;
 
         if (errorCode) {
-          setErrorMessage("Klarte ikke å logge deg inn, beklager det.");
+          setErrorMessage(
+            `Klarte ikke å logge deg inn, beklager det. Feilkode: ${errorCode}`
+          );
+          console.log(errorMessage);
         }
       });
   }
@@ -32,21 +37,20 @@ export const InternalLogin = () => {
 
   return (
     <form onSubmit={logIn}>
-      <label htmlFor="username" className="screen-reader-only">
-        Brukernavn
-      </label>
-      <input
-        id="username"
-        value={user}
-        onChange={(e) => setUser(e.target.value)}
-        placeholder="Brukernavn"
-      />
+      <div className="inputgroup">
+        <TextField
+          style={{
+            marginRight: "10px",
+          }}
+          id="username"
+          label="Brukernavn"
+          value={user}
+          onChange={(e) => setUser(e.target.value)}
+          placeholder="Brukernavn"
+        />
 
-      <div>
-        <label htmlFor="password" className="screen-reader-only">
-          Passord
-        </label>
-        <input
+        <TextField
+          label="Passord"
           id="password"
           type={peek ? "text" : "password"}
           placeholder="Passord"
@@ -66,6 +70,14 @@ export const InternalLogin = () => {
       <Button variant="contained" color="primary" type="submit">
         Logg inn
       </Button>
+
+      <div className="actiongroup">
+        <Link href="/">
+          <Button variant="contained" color="primary">
+            Tilbake
+          </Button>
+        </Link>
+      </div>
       <p>{errorMessage}</p>
     </form>
   );
