@@ -8,24 +8,19 @@ import { firebase } from "./firebase/firebase";
 import styles from "./EditModeToggler.module.scss";
 import { useIsAdmin } from "./hooks/useIsAdmin";
 import { userAtom } from "./atoms/user";
+import { editingAtom } from "./atoms/editing";
 
 export function EditModeToggler() {
-  const [page, setPage] = useAtom(pageAtom);
+  const [editing, setEditing] = useAtom(editingAtom);
   const [user] = useAtom(userAtom);
   const isAdmin = useIsAdmin();
 
   function edit() {
-    setPage({
-      ...page,
-      editMode: true,
-    });
+    setEditing(true);
   }
 
   function endEdit() {
-    setPage({
-      ...page,
-      editMode: false,
-    });
+    setEditing(false);
   }
 
   function logOut() {
@@ -46,7 +41,7 @@ export function EditModeToggler() {
       <div className="actiongroup">
         <Link href="login">
           <Button variant="contained" color="primary">
-            Logg inn
+            Admin
           </Button>
         </Link>
       </div>
@@ -62,7 +57,7 @@ export function EditModeToggler() {
       <Button variant="contained" color="primary" onClick={logOut}>
         Logg ut
       </Button>
-      {!page.editMode ? (
+      {!editing ? (
         <Button variant="contained" color="primary" onClick={edit}>
           Endre innhold
         </Button>

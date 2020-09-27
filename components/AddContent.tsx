@@ -8,10 +8,11 @@ import { firebase } from "./firebase/firebase";
 import { usePageId } from "./hooks/usePageId";
 import { AddText } from "./processors/TextProcessor";
 import { AddLink } from "./processors/LinkProcessor";
-import { AddImage } from "./processors/ImageProcessor";
+import { AddImage } from "./processors/Image/ImageProcessor";
 import Button from "@material-ui/core/Button";
 import styles from "./AddContent.module.scss";
 import { AddHeading } from "./processors/HeadingProcessor";
+import { editingAtom } from "./atoms/editing";
 
 interface WithShowAddContent {
   index: number;
@@ -109,10 +110,10 @@ interface AddContentProps {
 }
 
 export const AddContent = ({ index }: AddContentProps) => {
-  const [page] = useAtom(pageAtom);
+  const [editing] = useAtom(editingAtom);
   const [showAddContent, setShowAddContent] = useState(false);
 
-  if (!page.editMode) {
+  if (!editing) {
     return null;
   }
 

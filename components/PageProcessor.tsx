@@ -2,7 +2,7 @@ import React from "react";
 import { pageAtom } from "./atoms/page";
 import { useAtom } from "jotai";
 import { TextProcessor } from "./processors/TextProcessor";
-import { ImageProcessor } from "./processors/ImageProcessor";
+import { ImageProcessor } from "./processors/Image/ImageProcessor";
 import { AddContent } from "./AddContent";
 import { LinkProcessor } from "./processors/LinkProcessor";
 import { usePageId } from "./hooks/usePageId";
@@ -12,9 +12,11 @@ import { siteAtom } from "./atoms/site";
 import { useIsAdmin } from "./hooks/useIsAdmin";
 import styles from "./PageProcessor.module.scss";
 import { HeadingProcessor } from "./processors/HeadingProcessor";
+import { editingAtom } from "./atoms/editing";
 
 export const PageProcessor = () => {
   const [page] = useAtom(pageAtom);
+  const [editing] = useAtom(editingAtom);
   const [site] = useAtom(siteAtom);
   const pageId = usePageId();
   const isAdmin = useIsAdmin();
@@ -69,7 +71,7 @@ export const PageProcessor = () => {
 
         return (
           <React.Fragment key={index}>
-            <div className={page.editMode ? styles.wrapper : ""}>{elem}</div>
+            <div className={editing ? styles.wrapper : ""}>{elem}</div>
             <AddContent index={index} />
           </React.Fragment>
         );

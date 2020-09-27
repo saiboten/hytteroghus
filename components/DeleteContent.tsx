@@ -5,6 +5,7 @@ import { pageAtom } from "./atoms/page";
 import { usePageId } from "./hooks/usePageId";
 import { siteAtom } from "./atoms/site";
 import Button from "@material-ui/core/Button";
+import { editingAtom } from "./atoms/editing";
 
 interface Props {
   index: number;
@@ -12,10 +13,11 @@ interface Props {
 
 export const DeleteContent = ({ index }: Props) => {
   const [page] = useAtom(pageAtom);
+  const [editing] = useAtom(editingAtom);
   const [site] = useAtom(siteAtom);
   const pageId = usePageId();
 
-  if (!page.editMode) {
+  if (!editing) {
     return null;
   }
 

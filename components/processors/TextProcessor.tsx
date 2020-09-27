@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 
 import styles from "./TextProcessor.module.scss";
 import { DeleteContent } from "../DeleteContent";
+import { editingAtom } from "../atoms/editing";
 
 interface Props {
   value: any;
@@ -39,8 +40,8 @@ export const AddText = (props: AddProps) => {
 
 export const TextProcessor = ({ value, index, saveChange }: Props) => {
   const [edit, setEdit] = useState(false);
+  const [editing] = useAtom(editingAtom);
   const [newValue, setNewValue] = useState(value);
-  const [page] = useAtom(pageAtom);
 
   function storeChange() {
     setEdit(false);
@@ -60,9 +61,8 @@ export const TextProcessor = ({ value, index, saveChange }: Props) => {
 
   return (
     <div className={styles.text}>
-      {value}
       <div className={styles.optionsbuttons}>
-        {page.editMode && (
+        {editing && (
           <Button
             className={styles.optionsbutton}
             variant="contained"
@@ -74,6 +74,7 @@ export const TextProcessor = ({ value, index, saveChange }: Props) => {
         )}
         <DeleteContent index={index} />
       </div>
+      {value}
     </div>
   );
 };
