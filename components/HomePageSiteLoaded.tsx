@@ -51,12 +51,11 @@ export function HomeWithSiteLoaded({ homePage }: { homePage?: string }) {
         <title>Hytta</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <EditModeToggler />
 
       <main>
         <PageProcessor />
       </main>
-
-      <EditModeToggler />
     </div>
   );
 }
