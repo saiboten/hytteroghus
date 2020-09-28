@@ -1,5 +1,5 @@
 import React from "react";
-import { pageAtom } from "./atoms/page";
+import { pageAtom, FragmentType } from "./atoms/page";
 import { useAtom } from "jotai";
 import { TextProcessor } from "./processors/TextProcessor";
 import { ImageProcessor } from "./processors/Image/ImageProcessor";
@@ -13,6 +13,7 @@ import { useIsAdmin } from "./hooks/useIsAdmin";
 import styles from "./PageProcessor.module.scss";
 import { HeadingProcessor } from "./processors/HeadingProcessor";
 import { editingAtom } from "./atoms/editing";
+import { create_UUID } from "./util/uuid";
 
 export const PageProcessor = () => {
   const [page] = useAtom(pageAtom);
@@ -43,11 +44,39 @@ export const PageProcessor = () => {
     });
   }
 
+  function StoreContentFirst(type: FragmentType, rest: any) {
+    const contentCopy = [...page.content];
+
+    contentCopy.unshift({
+      type: type,
+      id: create_UUID(),
+      ...rest,
+    });
+
+    firebase.firestore().collection(site.collection).doc(pageId).update({
+      content: contentCopy,
+    });
+  }
+
   return (
     <>
-      <AddContent index={-1} />
+      <AddContent store={StoreContentFirst} />
       {page.content.map((item, index) => {
         var elem = undefined;
+
+        function StoreContent(type: FragmentType, rest: any) {
+          const contentCopy = [...page.content];
+
+          contentCopy.splice(index + 1, 0, {
+            type,
+            id: create_UUID(),
+            ...rest,
+          });
+
+          firebase.firestore().collection(site.collection).doc(pageId).update({
+            content: contentCopy,
+          });
+        }
 
         if (item.type === "text") {
           elem = (
@@ -72,7 +101,7 @@ export const PageProcessor = () => {
         return (
           <React.Fragment key={index}>
             <div className={editing ? styles.wrapper : ""}>{elem}</div>
-            <AddContent index={index} />
+            <AddContent store={StoreContent} />
           </React.Fragment>
         );
       })}

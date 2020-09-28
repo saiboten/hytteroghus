@@ -14,57 +14,30 @@ import styles from "./AddContent.module.scss";
 import { AddHeading } from "./processors/HeadingProcessor";
 import { editingAtom } from "./atoms/editing";
 
-interface WithShowAddContent {
-  index: number;
+interface WithShowAddContent extends AddContentProps {
   resetAdd: () => void;
 }
 
-const WithShowAddContent = ({ index, resetAdd }: WithShowAddContent) => {
-  const [page] = useAtom(pageAtom);
-  const [site] = useAtom(siteAtom);
+const WithShowAddContent = ({ store }: WithShowAddContent) => {
   const [addText, setAddText] = useState(false);
   const [addLink, setAddLink] = useState(false);
   const [addImage, setAddImage] = useState(false);
   const [addHeader, setAddHeader] = useState(false);
-  const pageId = usePageId();
-
-  function StoreContent(type: FragmentType, rest: any) {
-    const contentCopy = [...page.content];
-
-    if (index == -1) {
-      contentCopy.unshift({
-        type: type,
-        id: create_UUID(),
-        ...rest,
-      });
-    } else {
-      contentCopy.splice(index + 1, 0, {
-        type,
-        id: create_UUID(),
-        ...rest,
-      });
-    }
-
-    firebase.firestore().collection(site.collection).doc(pageId).update({
-      content: contentCopy,
-    });
-    resetAdd();
-  }
 
   if (addText) {
-    return <AddText storeContent={StoreContent} />;
+    return <AddText storeContent={store} />;
   }
 
   if (addLink) {
-    return <AddLink addStuff={StoreContent} />;
+    return <AddLink addStuff={store} />;
   }
 
   if (addImage) {
-    return <AddImage addStuff={StoreContent} />;
+    return <AddImage addStuff={store} />;
   }
 
   if (addHeader) {
-    return <AddHeading storeContent={StoreContent} />;
+    return <AddHeading storeContent={store} />;
   }
 
   return (
@@ -106,10 +79,10 @@ const WithShowAddContent = ({ index, resetAdd }: WithShowAddContent) => {
 };
 
 interface AddContentProps {
-  index: number;
+  store: (type: FragmentType, rest: any) => void;
 }
 
-export const AddContent = ({ index }: AddContentProps) => {
+export const AddContent = (props: AddContentProps) => {
   const [editing] = useAtom(editingAtom);
   const [showAddContent, setShowAddContent] = useState(false);
 
@@ -120,8 +93,11 @@ export const AddContent = ({ index }: AddContentProps) => {
   if (showAddContent) {
     return (
       <WithShowAddContent
+        store={(type, data) => {
+          setShowAddContent(false);
+          props.store(type, data);
+        }}
         resetAdd={() => setShowAddContent(false)}
-        index={index}
       />
     );
   }
