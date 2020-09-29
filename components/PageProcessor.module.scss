@@ -1,6 +1,17 @@
 .wrapper {
   border: 1px dotted black;
-  margin-bottom: 10px;
-  padding: 10px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  padding-top: 5rem;
   position: relative;
+
+  @media (max-width: 60rem) {
+    padding-top: 0;
+  }
+}
+
+.container {
+  @media (min-width: 60rem) {
+    padding-top: 5rem;
+  }
 }

@@ -25,5 +25,5 @@ export default function Home({ siteProp }: Props) {
 }
 
 Home.getInitialProps = async (ctx: any) => {
-  return { siteProp: "matbu" };
+  return { siteProp: ctx.req.headers.host.split(".")[0] };
 };

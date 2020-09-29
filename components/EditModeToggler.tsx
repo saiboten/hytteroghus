@@ -54,15 +54,30 @@ export function EditModeToggler() {
 
   return (
     <div className={styles.container}>
-      <Button variant="contained" color="primary" onClick={logOut}>
+      <Button
+        className={styles.button}
+        variant="contained"
+        color="primary"
+        onClick={logOut}
+      >
         Logg ut
       </Button>
       {!editing ? (
-        <Button variant="contained" color="primary" onClick={edit}>
+        <Button
+          className={styles.button}
+          variant="contained"
+          color="primary"
+          onClick={edit}
+        >
           Endre innhold
         </Button>
       ) : (
-        <Button variant="contained" color="primary" onClick={endEdit}>
+        <Button
+          className={styles.button}
+          variant="contained"
+          color="primary"
+          onClick={endEdit}
+        >
           Avslutt innholdsredigering
         </Button>
       )}

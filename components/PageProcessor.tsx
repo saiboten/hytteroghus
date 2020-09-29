@@ -47,7 +47,7 @@ export const PageProcessor = () => {
   }
 
   return (
-    <>
+    <div className={`${editing ? styles.container : ""}`}>
       <AddContent store={storeContentFirst} />
       {page.content.map((item, index) => {
         var elem = undefined;
@@ -129,6 +129,6 @@ export const PageProcessor = () => {
           </React.Fragment>
         );
       })}
-    </>
+    </div>
   );
 };
