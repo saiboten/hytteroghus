@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { FragmentType } from "../../atoms/page";
 import Button from "@material-ui/core/Button";
 import { DropZone } from "./DropZone";
@@ -9,18 +9,13 @@ import { usePageId } from "../../hooks/usePageId";
 import { create_UUID } from "../../util/uuid";
 
 import styles from "./ImageProcessor.module.scss";
-
-interface Props {
-  value: string;
-  index: number;
-  saveChange: (index: number, values: any) => void;
-}
+import { ContentActions } from "../ContentActions";
 
 interface AddProps {
   addStuff: (type: FragmentType, ...data: any[]) => void;
 }
 
-export const AddImage = (props: AddProps) => {
+export const AddImage = ({ addStuff }: AddProps) => {
   const [site] = useAtom(siteAtom);
   const [downloadUrl, setDownloadUrl] = useState("");
   const pageId = usePageId();
@@ -51,7 +46,7 @@ export const AddImage = (props: AddProps) => {
       <Button
         variant="contained"
         color="primary"
-        onClick={() => props.addStuff("image", { value: downloadUrl })}
+        onClick={() => addStuff("image", { value: downloadUrl })}
       >
         Lagre
       </Button>
@@ -59,6 +54,26 @@ export const AddImage = (props: AddProps) => {
   );
 };
 
-export const ImageProcessor = (props: Props) => {
-  return <img className={styles.image} src={props.value} alt={props.value} />;
+interface Props {
+  value: string;
+  save: (values: any) => void;
+  deleteContent: () => void;
+}
+
+export const ImageProcessor = ({ save, deleteContent, value }: Props) => {
+  const [edit, setEdit] = useState(false);
+
+  if (edit) {
+    return <div>TODO</div>;
+  }
+
+  return (
+    <div>
+      <img className={styles.image} src={value} alt={value} />
+      <ContentActions
+        deleteContent={deleteContent}
+        edit={() => setEdit(true)}
+      />
+    </div>
+  );
 };

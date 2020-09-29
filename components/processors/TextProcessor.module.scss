@@ -3,34 +3,6 @@
   height: 100px;
 }
 
-.optionsbuttons {
-  margin-bottom: 12px;
-  position: absolute;
-  top: 0;
-  right: 0;
-
-  @media (max-width: 600px) {
-    display: flex;
-    flex-direction: column;
-    left: 0;
-    width: 100%;
-    position: static;
-  }
-}
-
-.optionsbutton {
-  &:not(:last-child) {
-    margin-right: 12px;
-  }
-
-  @media (max-width: 600px) {
-    &:not(:last-child) {
-      margin-bottom: 12px;
-      margin-right: 0;
-    }
-  }
-}
-
 .text {
   margin-bottom: 24px;
 }

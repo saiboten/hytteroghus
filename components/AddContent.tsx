@@ -82,7 +82,7 @@ interface AddContentProps {
   store: (type: FragmentType, rest: any) => void;
 }
 
-export const AddContent = (props: AddContentProps) => {
+export const AddContent = ({ store }: AddContentProps) => {
   const [editing] = useAtom(editingAtom);
   const [showAddContent, setShowAddContent] = useState(false);
 
@@ -95,7 +95,7 @@ export const AddContent = (props: AddContentProps) => {
       <WithShowAddContent
         store={(type, data) => {
           setShowAddContent(false);
-          props.store(type, data);
+          store(type, data);
         }}
         resetAdd={() => setShowAddContent(false)}
       />

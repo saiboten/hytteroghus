@@ -32,19 +32,7 @@ export const PageProcessor = () => {
     );
   }
 
-  function saveChange(index: number, newValues: any) {
-    const contentCopy = [...page.content];
-    contentCopy[index] = {
-      ...contentCopy[index],
-      ...newValues,
-    };
-
-    firebase.firestore().collection(site.collection).doc(pageId).update({
-      content: contentCopy,
-    });
-  }
-
-  function StoreContentFirst(type: FragmentType, rest: any) {
+  function storeContentFirst(type: FragmentType, rest: any) {
     const contentCopy = [...page.content];
 
     contentCopy.unshift({
@@ -60,18 +48,35 @@ export const PageProcessor = () => {
 
   return (
     <>
-      <AddContent store={StoreContentFirst} />
+      <AddContent store={storeContentFirst} />
       {page.content.map((item, index) => {
         var elem = undefined;
 
-        function StoreContent(type: FragmentType, rest: any) {
+        function save(rest: any, fragmentType: FragmentType, insert = false) {
           const contentCopy = [...page.content];
 
-          contentCopy.splice(index + 1, 0, {
-            type,
-            id: create_UUID(),
-            ...rest,
+          if (insert) {
+            contentCopy.splice(index + 1, 0, {
+              id: create_UUID(),
+              type: fragmentType,
+              ...rest,
+            });
+          } else {
+            contentCopy[index] = {
+              ...contentCopy[index],
+              ...rest,
+              type: fragmentType,
+            };
+          }
+
+          firebase.firestore().collection(site.collection).doc(pageId).update({
+            content: contentCopy,
           });
+        }
+
+        function deleteContent() {
+          const contentCopy = [...page.content];
+          contentCopy.splice(index, 1);
 
           firebase.firestore().collection(site.collection).doc(pageId).update({
             content: contentCopy,
@@ -80,28 +85,47 @@ export const PageProcessor = () => {
 
         if (item.type === "text") {
           elem = (
-            <TextProcessor saveChange={saveChange} index={index} {...item} />
+            <TextProcessor
+              save={(data) => save(data, "text")}
+              deleteContent={deleteContent}
+              {...item}
+            />
           );
         } else if (item.type == "image") {
           elem = (
-            <ImageProcessor saveChange={saveChange} index={index} {...item} />
+            <ImageProcessor
+              save={(data) => save(data, "image")}
+              deleteContent={deleteContent}
+              {...item}
+            />
           );
         } else if (item.type == "link") {
           elem = (
-            <LinkProcessor saveChange={saveChange} index={index} {...item} />
+            <LinkProcessor
+              save={(data) => save(data, "link")}
+              deleteContent={deleteContent}
+              {...item}
+            />
           );
         } else if (item.type == "heading") {
           elem = (
-            <HeadingProcessor saveChange={saveChange} index={index} {...item} />
+            <HeadingProcessor
+              save={(data) => save(data, "heading")}
+              deleteContent={deleteContent}
+              {...item}
+            />
           );
         } else {
+          console.log(item);
           throw new Error("Unsupported content type detected");
         }
 
         return (
           <React.Fragment key={index}>
             <div className={editing ? styles.wrapper : ""}>{elem}</div>
-            <AddContent store={StoreContent} />
+            <AddContent
+              store={(fragment, data) => save(fragment, data, true)}
+            />
           </React.Fragment>
         );
       })}

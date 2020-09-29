@@ -1,17 +1,9 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { FragmentType, pageAtom } from "../atoms/page";
+import { FragmentType } from "../atoms/page";
 import styles from "./Link.module.scss";
 import Button from "@material-ui/core/Button";
-import { useAtom } from "jotai";
-import { DeleteContent } from "../DeleteContent";
-
-interface Props {
-  link: string;
-  linkText: string;
-  index: number;
-  saveChange: (index: number, values: any) => void;
-}
+import { ContentActions } from "./ContentActions";
 
 interface AddProps {
   addStuff: (type: FragmentType, ...data: any[]) => void;
@@ -52,18 +44,29 @@ export const AddLink = (props: AddProps) => {
   );
 };
 
-export const LinkProcessor = ({ link, linkText, index, saveChange }: Props) => {
+interface Props {
+  link: string;
+  linkText: string;
+  save: (values: any) => void;
+  deleteContent: () => void;
+}
+
+export const LinkProcessor = ({
+  link,
+  linkText,
+  save,
+  deleteContent,
+}: Props) => {
   const [edit, setEdit] = useState(false);
   const [newLinkValue, setNewLinkValue] = useState(link);
   const [newLinkTextValue, setNewLinkTextValue] = useState(linkText);
-  const [page] = useAtom(pageAtom);
 
   if (edit) {
     return (
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          saveChange(index, { link: newLinkValue, linkText: newLinkTextValue });
+          save({ link: newLinkValue, linkText: newLinkTextValue });
           setEdit(false);
         }}
       >
@@ -87,23 +90,14 @@ export const LinkProcessor = ({ link, linkText, index, saveChange }: Props) => {
   }
 
   return (
-    <>
+    <div>
       <Link href={link}>
         <a className={styles.link}>{linkText}</a>
       </Link>
-      <div className={styles.optionsbuttons}>
-        {page.editMode && (
-          <Button
-            className={styles.optionsbutton}
-            variant="contained"
-            color="primary"
-            onClick={() => setEdit(true)}
-          >
-            Endre
-          </Button>
-        )}
-        <DeleteContent index={index} />
-      </div>
-    </>
+      <ContentActions
+        deleteContent={deleteContent}
+        edit={() => setEdit(true)}
+      />
+    </div>
   );
 };

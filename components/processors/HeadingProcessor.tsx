@@ -10,6 +10,7 @@ import FormControl from "@material-ui/core/FormControl";
 import styles from "./HeadingProcessor.module.scss";
 import { DeleteContent } from "../DeleteContent";
 import { editingAtom } from "../atoms/editing";
+import { ContentActions } from "./ContentActions";
 
 interface AddProps {
   storeContent: (type: FragmentType, ...data: any[]) => void;
@@ -68,23 +69,23 @@ export const AddHeading = ({
 
 interface Props {
   value?: any;
-  index: number;
-  saveChange: (index: number, values: any) => void;
+  save: (values: any) => void;
   center?: "true" | "false";
+  deleteContent: () => void;
 }
 
 export const HeadingProcessor = ({
   value,
   center,
-  index,
-  saveChange,
+  save,
+  deleteContent,
 }: Props) => {
   const [edit, setEdit] = useState(false);
   const [editing] = useAtom(editingAtom);
 
   function storeChange(_: FragmentType, data: any[]) {
     setEdit(false);
-    saveChange(index, data);
+    save(data);
   }
 
   if (edit) {
@@ -98,23 +99,16 @@ export const HeadingProcessor = ({
   }
 
   return (
-    <div
-      className={`${styles.text} 
+    <div>
+      <ContentActions
+        deleteContent={deleteContent}
+        edit={() => setEdit(true)}
+      />
+      <div
+        className={`${styles.text} 
       ${center === "true" ? styles[`text--center`] : ""}`}
-    >
-      <h1>{value}</h1>
-      <div className={styles.optionsbuttons}>
-        {editing && (
-          <Button
-            className={styles.optionsbutton}
-            variant="contained"
-            color="primary"
-            onClick={() => setEdit(true)}
-          >
-            Endre
-          </Button>
-        )}
-        <DeleteContent index={index} />
+      >
+        <h1>{value}</h1>
       </div>
     </div>
   );

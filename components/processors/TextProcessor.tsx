@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { useAtom } from "jotai";
-import { FragmentType, pageAtom } from "../atoms/page";
+import { FragmentType } from "../atoms/page";
 import Button from "@material-ui/core/Button";
 
 import styles from "./TextProcessor.module.scss";
-import { DeleteContent } from "../DeleteContent";
-import { editingAtom } from "../atoms/editing";
+import { ContentActions } from "./ContentActions";
 
 interface Props {
   value: any;
-  index: number;
-  saveChange: (index: number, values: any) => void;
+  deleteContent: () => void;
+  save: (values: any) => void;
 }
 
 interface AddProps {
@@ -38,14 +36,13 @@ export const AddText = (props: AddProps) => {
   );
 };
 
-export const TextProcessor = ({ value, index, saveChange }: Props) => {
+export const TextProcessor = ({ value, deleteContent, save }: Props) => {
   const [edit, setEdit] = useState(false);
-  const [editing] = useAtom(editingAtom);
   const [newValue, setNewValue] = useState(value);
 
   function storeChange() {
     setEdit(false);
-    saveChange(index, { value: newValue });
+    save({ value: newValue });
   }
 
   if (edit) {
@@ -61,19 +58,10 @@ export const TextProcessor = ({ value, index, saveChange }: Props) => {
 
   return (
     <div className={styles.text}>
-      <div className={styles.optionsbuttons}>
-        {editing && (
-          <Button
-            className={styles.optionsbutton}
-            variant="contained"
-            color="primary"
-            onClick={() => setEdit(true)}
-          >
-            Endre
-          </Button>
-        )}
-        <DeleteContent index={index} />
-      </div>
+      <ContentActions
+        edit={() => setEdit(true)}
+        deleteContent={deleteContent}
+      />
       {value}
     </div>
   );
