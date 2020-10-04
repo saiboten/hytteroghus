@@ -1,6 +1,5 @@
 import React, { useState, SetStateAction } from "react";
-import { useAtom } from "jotai";
-import { FragmentType, pageAtom } from "../atoms/page";
+import { FragmentType } from "../atoms/page";
 import Button from "@material-ui/core/Button";
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -8,8 +7,6 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormControl from "@material-ui/core/FormControl";
 
 import styles from "./HeadingProcessor.module.scss";
-import { DeleteContent } from "../DeleteContent";
-import { editingAtom } from "../atoms/editing";
 import { ContentActions } from "./ContentActions";
 
 interface AddProps {
@@ -81,7 +78,6 @@ export const HeadingProcessor = ({
   deleteContent,
 }: Props) => {
   const [edit, setEdit] = useState(false);
-  const [editing] = useAtom(editingAtom);
 
   function storeChange(_: FragmentType, data: any[]) {
     setEdit(false);

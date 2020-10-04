@@ -19,6 +19,7 @@ export function CreateSite() {
         admins: [user.uid],
       });
     setSite({
+      ...site,
       collection: site.collection,
       admins: [user.uid || "BUG"],
     });

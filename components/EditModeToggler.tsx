@@ -1,6 +1,5 @@
 import React from "react";
 import { useAtom } from "jotai";
-import { pageAtom } from "./atoms/page";
 import Button from "@material-ui/core/Button";
 import Link from "next/link";
 import { firebase } from "./firebase/firebase";

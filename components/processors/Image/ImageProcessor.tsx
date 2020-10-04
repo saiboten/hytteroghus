@@ -61,19 +61,10 @@ interface Props {
 }
 
 export const ImageProcessor = ({ save, deleteContent, value }: Props) => {
-  const [edit, setEdit] = useState(false);
-
-  if (edit) {
-    return <div>TODO</div>;
-  }
-
   return (
     <div>
       <img className={styles.image} src={value} alt={value} />
-      <ContentActions
-        deleteContent={deleteContent}
-        edit={() => setEdit(true)}
-      />
+      <ContentActions deleteContent={deleteContent} />
     </div>
   );
 };

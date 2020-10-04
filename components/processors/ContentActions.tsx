@@ -8,7 +8,7 @@ import { useAtom } from "jotai";
 import { editingAtom } from "../atoms/editing";
 
 interface Props {
-  edit: () => void;
+  edit?: () => void;
   deleteContent: () => void;
 }
 
@@ -21,14 +21,16 @@ export const ContentActions = ({ edit, deleteContent }: Props) => {
 
   return (
     <div className={styles.optionsbuttons}>
-      <Button
-        className={styles.optionsbutton}
-        variant="contained"
-        color="primary"
-        onClick={() => edit()}
-      >
-        Endre
-      </Button>
+      {edit && (
+        <Button
+          className={styles.optionsbutton}
+          variant="contained"
+          color="primary"
+          onClick={() => edit()}
+        >
+          Endre
+        </Button>
+      )}
       <DeleteContent deleteContent={deleteContent} />
     </div>
   );

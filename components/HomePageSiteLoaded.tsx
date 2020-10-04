@@ -32,10 +32,15 @@ export function HomeWithSiteLoaded({ homePage }: { homePage?: string }) {
             ...snapshot.data(),
           });
         }
+        setSite((site) => ({ ...site, siteloaded: true }));
       });
   }, [site.collection]);
 
   useFirebaseData(homePage || (pageId as string));
+
+  if (!site.siteloaded) {
+    return <div>"Laster..."</div>;
+  }
 
   if (site.admins.length === 0) {
     return <CreateSite />;

@@ -50,8 +50,6 @@ export const PageProcessor = () => {
     <div className={`${editing ? styles.container : ""}`}>
       <AddContent store={storeContentFirst} />
       {page.content.map((item, index) => {
-        var elem = undefined;
-
         function save(rest: any, fragmentType: FragmentType, insert = false) {
           const contentCopy = [...page.content];
 
@@ -82,6 +80,8 @@ export const PageProcessor = () => {
             content: contentCopy,
           });
         }
+
+        let elem = undefined;
 
         if (item.type === "text") {
           elem = (
@@ -124,7 +124,7 @@ export const PageProcessor = () => {
           <React.Fragment key={index}>
             <div className={editing ? styles.wrapper : ""}>{elem}</div>
             <AddContent
-              store={(fragment, data) => save(fragment, data, true)}
+              store={(fragment, data) => save(data, fragment, true)}
             />
           </React.Fragment>
         );

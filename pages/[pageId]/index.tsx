@@ -3,19 +3,15 @@ import { useEffect } from "react";
 import { siteAtom } from "../../components/atoms/site";
 import { HomeWithSiteLoaded } from "../../components/HomePageSiteLoaded";
 
-interface Props {
-  siteProp: string;
-}
-
-export default function Home({ siteProp }: Props) {
+export default function Home() {
   const [site, setSite] = useAtom(siteAtom);
 
   useEffect(() => {
     setSite({
       ...site,
-      collection: siteProp,
+      collection: window.location.host.split(".")[0],
     });
-  }, [siteProp]);
+  }, []);
 
   if (site.collection === "") {
     return <div>Laster</div>;
@@ -24,6 +20,6 @@ export default function Home({ siteProp }: Props) {
   return <HomeWithSiteLoaded />;
 }
 
-Home.getInitialProps = async (ctx: any) => {
-  return { siteProp: ctx.req.headers.host.split(".")[0] };
+Home.getInitialProps = async () => {
+  return {};
 };
