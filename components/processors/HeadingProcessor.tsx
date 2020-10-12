@@ -26,13 +26,23 @@ export const AddHeading = ({
 
   return (
     <div className={styles.addwrapper}>
-      <p>Legg til tekst.</p>
+      <div className={styles.savebutton}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => storeContent("heading", { value: text, center })}
+        >
+          Lagre
+        </Button>
+      </div>
 
-      <textarea
-        className={styles.textarea}
+      <input
+        className={`${styles.textarea} ${
+          center === "true" ? styles["textarea--centered"] : ""
+        }`}
         value={text}
         onChange={(e) => setText(e.target.value)}
-      ></textarea>
+      ></input>
 
       <FormControl component="fieldset">
         <RadioGroup
@@ -44,22 +54,14 @@ export const AddHeading = ({
             setCenter(value.target.value as SetStateAction<"true" | "false">);
           }}
         >
-          <FormControlLabel value="true" control={<Radio />} label="Sentrert" />
           <FormControlLabel
             value="false"
             control={<Radio />}
             label="Venstrejustert"
           />
+          <FormControlLabel value="true" control={<Radio />} label="Sentrert" />
         </RadioGroup>
       </FormControl>
-
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => storeContent("heading", { value: text, center })}
-      >
-        Lagre
-      </Button>
     </div>
   );
 };

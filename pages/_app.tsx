@@ -1,4 +1,4 @@
-import "../styles/globals.css";
+import "../styles/globals.scss";
 import styles from "../styles/_app.module.css";
 
 import { Provider, useAtom } from "jotai";
