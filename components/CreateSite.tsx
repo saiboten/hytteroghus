@@ -25,7 +25,7 @@ export function CreateSite() {
     });
   }
 
-  if (user.uid === "") {
+  if (!user.uid) {
     return <Login />;
   }
 

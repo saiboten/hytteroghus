@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-import { pageAtom, FragmentType } from "./atoms/page";
-import { siteAtom } from "./atoms/site";
+import { FragmentType } from "./atoms/page";
 
 import { useAtom } from "jotai";
-import { create_UUID } from "./util/uuid";
-import { firebase } from "./firebase/firebase";
-import { usePageId } from "./hooks/usePageId";
 import { AddText } from "./processors/TextProcessor";
 import { AddLink } from "./processors/LinkProcessor";
 import { AddImage } from "./processors/Image/ImageProcessor";
